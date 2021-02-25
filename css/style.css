@@ -8,6 +8,7 @@
 
 body {
   font-family: "Minecraftia", sans-serif;
+  overflow: hidden;
 }
 
 img {
@@ -67,46 +68,65 @@ img {
 
 .toolbar {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   gap: 20px;
   position: absolute;
   bottom: 1px;
   left: 50%;
   transform: translate(-50%, 0);
-  width: 300px;
-  height: 70px;
-  background: url(../img/toolbarhorizontal.png) no-repeat center center/cover;
+  width: 387px;
+  height: 127px;
+  background: url(../img/toolbarbig.png) no-repeat center center/cover;
 }
 
-.tool {
+.item {
   cursor: grab;
   position: absolute;
-  top: 7px;
-  width: 55px;
-  height: 55px;
+  top: 8px;
+  width: 48px;
+  height: 48px;
+}
+.blockitem {
+  width: 43px;
+  height: 43px;
 }
 
 .tool-1 {
   background: url(../img/pickaxe.png) no-repeat center center/cover;
-  left: 11px;
+  left: 7px;
 }
 .tool-1:hover {
   background: url(../img/pickaxe.png) no-repeat center center/cover, #ffffa07a;
 }
 .tool-2 {
   background: url(../img/axe.png) no-repeat center center/cover;
-  left: 86px;
+  left: 72px;
 }
 .tool-2:hover {
   background: url(../img/axe.png) no-repeat center center/cover, #ffffa07a;
 }
 .tool-3 {
   background: url(../img/shovel.png) no-repeat center center/cover;
-  left: 160px;
+  left: 137px;
 }
 .tool-3:hover {
   background: url(../img/shovel.png) no-repeat center center/cover, #ffffa07a;
 }
+.toolbar div:nth-child(4) {
+  top: 11px;
+  left: 205px;
+}
+.toolbar div:nth-child(5) {
+  top: 11px;
+  left: 270px;
+}
+.toolbar div:nth-child(6) {
+  top: 11px;
+  left: 335px;
+}
+/* .item[data-inventory="grass"] {
+  background-color: red;
+} */
 
 /* Game Window */
 .gamewindow {
@@ -114,12 +134,13 @@ img {
   height: 100vh;
   background: #4c566a;
   text-align: center;
+  display: none;
 }
 .world {
   max-width: 100vh;
-  height: 100vh;
+  height: 87vh;
   margin: 0 auto;
-  background: whitesmoke;
+  /* background: whitesmoke; */
   display: grid;
   grid-template-columns: repeat(40, minmax(10px, 1fr));
   grid-template-rows: repeat(40, minmax(10px, 1fr));
@@ -147,18 +168,30 @@ img {
 .block[data-block-type="sky"] {
   background: #3e82cc;
 }
-.block[data-block-type="cobblestone"] {
+.block[data-block-type="cobblestone"],
+.item[data-inventory="cobblestone"] {
   background: url(../img/blocks/cobblestone.png) no-repeat center/cover;
 }
-.block[data-block-type="tree"] {
+.block[data-block-type="tree"],
+.item[data-inventory="tree"] {
   background: url(../img/blocks/tree.jpg) no-repeat center/cover;
 }
-.block[data-block-type="leaves"] {
+.block[data-block-type="leaves"],
+.item[data-inventory="leaves"] {
   background: url(../img/blocks/leaves.png) no-repeat center/cover;
 }
-.block[data-block-type="grass"] {
+.block[data-block-type="grass"],
+.item[data-inventory="grass"] {
   background: url(../img/blocks/grass.png) no-repeat center/cover;
 }
-.block[data-block-type="dirt"] {
+.block[data-block-type="dirt"],
+.item[data-inventory="dirt"] {
   background: url(../img/blocks/dirt.jpg) no-repeat center/cover;
+}
+.block[data-block-type="lava"] {
+  background: url(../img/blocks/lava.jpg) no-repeat center/cover;
+}
+.block[data-block-type="cloud"],
+.item[data-inventory="cloud"] {
+  background: whitesmoke;
 }
