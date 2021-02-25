@@ -13,7 +13,7 @@ const database = {
     axe: ['tree', 'leaves'],
     shovel: ['dirt','grass'],
   },
-
+  
   inventory: {
     grass: 0,
     dirt: 0,
@@ -45,7 +45,6 @@ const database = {
           block.setAttribute('row',row);
           block.setAttribute('col',col);
           block.setAttribute('data-block-type','null');
-          // block.setAttribute('data-block-type','dirt');
           world.appendChild(block);
         }
       }
@@ -54,6 +53,10 @@ const database = {
     generateSky: (e) => {
       let number = database.functions.randomNumber(20,30);
       for (let row = 1;row <= number;row++) {
+        const current = document.querySelectorAll(`.block[row="${row}"`);
+        current.forEach(el => el.setAttribute('data-block-type', 'sky'));
+      }
+      for (let row = 1;row <= 15;row++) {
         const current = document.querySelectorAll(`.block[row="${row}"`);
         current.forEach(el => el.setAttribute('data-block-type', 'sky'));
       }
@@ -73,17 +76,6 @@ const database = {
         number2-=3;
         randomize[1]++;
       }
-      // number = skyBlocks[skyBlocks.length - 1].getAttribute('row');
-      // startRow = parseInt(number/3);
-      // number = database.functions.randomNumber(2,26);
-      // for (let row = startRow; row > startRow-height; row--) {
-      //   for (let col = number; col < number+number2; col++) {
-      //     const current = document.querySelector(`.block[col="${col}"][row="${row}"]`);
-      //     current.setAttribute('data-block-type', 'cloud');
-      //   }
-      //   number2-=2;
-      //   number++;
-      // }
     },
 
     generateGrass: () => {
@@ -94,14 +86,14 @@ const database = {
         const current = document.querySelector(`.block[col="${col}"][row="${startRow}"]`);
         current.setAttribute('data-block-type','grass');
         col === randomize[0] ? startRow -=2 : '';
-        col === randomize[1] ? startRow++ : '';
+        col === randomize[1] ? startRow -= 1 : '';
         col === randomize[2] ? startRow-- : '';
       }
     },
 
     generateDirt: () => {
       const grassBlock = document.querySelectorAll('.block[data-block-type="grass"]');
-      for (let count = 1; count <= 7; count++) {
+      for (let count = 1; count <= 6; count++) {
         for (let index = 0; index < grassBlock.length ;index++) {
           const currentRow = Number(grassBlock[index].getAttribute('row'));
           const currentCol = grassBlock[index].getAttribute('col');
@@ -123,6 +115,8 @@ const database = {
       database.functions.replaceAll('cobblestone','null');
     },
 
+    // generat
+
     replaceAll: (what, where) => {
       const current = document.querySelectorAll(`.block[data-block-type="${where}"]`);
       current.forEach(e => e.setAttribute('data-block-type',what));
@@ -140,7 +134,10 @@ const database = {
 
     listeners: () => {
       const blocks = document.querySelectorAll('.block');
-      blocks.forEach(e => e.addEventListener('click', database.functions.mineBlock));
+      blocks.forEach(e => e.addEventListener('click', (e) =>  {
+        database.functions.mineBlock(e);
+        database.functions.placeable(e);
+      }));
     },
 
     mineable: (e) => {
@@ -160,17 +157,20 @@ const database = {
         console.warn('Mined Block:',current.getAttribute('data-block-type'));
         const block = current.getAttribute('data-block-type');
         current.setAttribute('data-block-type','sky');
-        database.functions.updateInventory(e,block);
+        database.functions.updateInventory(e,block,'mine');
       }
     },
 
     placeable: (e) => {
-      if (currentBlock && e.target.getAttribute('data-block-type') === 'sky') {
-
+      const block = database.var.currentBlock;
+      if (block && e.target.getAttribute('data-block-type') === 'sky') {
+        e.target.setAttribute('data-block-type',block);
+        database.functions.updateInventory(e,block,'place');
       }
     },
 
     pickTool: (e) => {
+      database.var.currentBlock = '';
       const index = [...e.target.parentElement.children].indexOf(e.target);
       database.var.currentTool = database.tools[index];
       console.warn('currentTool = ' + database.var.currentTool);
@@ -180,20 +180,37 @@ const database = {
       // remove Current Tool selected
       database.var.currentTool = '';
       // add Current Block
-      database.var.currentBlock = '';
+      database.var.currentBlock = e.target.getAttribute('data-inventory');
+      console.warn('currentBlock = ' + database.var.currentBlock);
     },
 
-    updateInventory: (e,block) => {
-      database.inventory[block] += 1;
-      console.log(database.inventory);
-      console.log(database.inventory[block] === 1);
-      if (database.inventory[block] === 1) {
+    updateInventory: (e,block,type) => {
+      if (type === 'mine' && database.inventory[block] === 0) {
+        database.inventory[block] += 1;
         const div = document.createElement('div');
         div.classList.add('item');
         div.classList.add('blockitem');
         div.setAttribute('data-inventory',block);
+        const span = document.createElement('span');
+        span.classList.add('inventoryCount');
+        span.textContent = database.inventory[block];
+        div.appendChild(span);
         const toolbar = document.querySelector('.toolbar');
         toolbar.append(div);
+        div.addEventListener('click',database.functions.pickBlock);
+      } else if (type === 'mine' && database.inventory[block] > 0 ) {
+        database.inventory[block] += 1;
+        const div = document.querySelector(`.blockitem[data-inventory="${block}"]`);
+        div.querySelector('span').textContent = database.inventory[block];
+      }
+      if (type === 'place') {
+        database.inventory[block] -= 1;
+        const div = document.querySelector(`.blockitem[data-inventory="${block}"]`);
+        div.querySelector('span').textContent = database.inventory[block];
+        if (database.inventory[block] === 0) {
+          div.remove();
+          database.var.currentBlock = '';
+        }
       }
     },
 

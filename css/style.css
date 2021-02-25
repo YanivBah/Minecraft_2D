@@ -124,6 +124,14 @@ img {
   top: 11px;
   left: 335px;
 }
+.inventoryCount {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  color: white;
+  text-shadow: 1px 0px 3px black;
+  font-size: 14px;
+}
 /* .item[data-inventory="grass"] {
   background-color: red;
 } */
