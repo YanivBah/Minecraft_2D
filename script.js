@@ -56,10 +56,6 @@ const database = {
         const current = document.querySelectorAll(`.block[row="${row}"`);
         current.forEach(el => el.setAttribute('data-block-type', 'sky'));
       }
-      for (let row = 1;row <= 15;row++) {
-        const current = document.querySelectorAll(`.block[row="${row}"`);
-        current.forEach(el => el.setAttribute('data-block-type', 'sky'));
-      }
     },
 
     generateCloud: () => {
@@ -115,7 +111,27 @@ const database = {
       database.functions.replaceAll('cobblestone','null');
     },
 
-    // generat
+    generateTree: () => {
+      const grassBlock = document.querySelectorAll('.block[data-block-type="grass"]');
+      let randomize = database.functions.randomNumber(5,34);
+      let col = parseInt(grassBlock[randomize].getAttribute('col'));
+      let row = parseInt(grassBlock[randomize].getAttribute('row')) - 1;
+      let current = document.querySelector(`.block[row="${row}"][col="${col}"]`);
+      current.setAttribute('data-block-type', 'tree');
+      randomize = database.functions.randomNumber(2,6);
+      for (let i = 1; i <= randomize;i++,row--) {
+        current = document.querySelector(`.block[row="${row}"][col="${col}"]`);
+        current.setAttribute('data-block-type', 'tree');
+      }
+      current = document.querySelector(`.block[row="${row}"][col="${col}"]`);
+      let xAxis = 2;
+      for (let y = row;y >= row-randomize;y--) {
+        for (let x = col-1;x < col+2;x++) {
+          current = document.querySelector(`.block[row="${y}"][col="${x}"]`);
+          current.setAttribute('data-block-type', 'leaves');
+        }
+      }
+    },
 
     replaceAll: (what, where) => {
       const current = document.querySelectorAll(`.block[data-block-type="${where}"]`);
