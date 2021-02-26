@@ -6,12 +6,13 @@ const database = {
     currentWorld: [],
   },
 
-  tools: ['pickaxe','axe','shovel'],
+  tools: ['pickaxe','axe','shovel','bucket'],
 
   blocks: {
-    pickaxe: ['cobblestone','diamond'],
+    pickaxe: ['cobblestone','diamond','blackstone','coal'],
     axe: ['tree', 'leaves'],
     shovel: ['dirt','grass'],
+    bucket: ['lava'],
   },
   
   inventory: {},
@@ -143,7 +144,9 @@ const database = {
       database.functions.generateUnderground();
       database.functions.generateTree();
       database.functions.generateTree();
-      database.functions.replaceRandom('diamond','cobblestone',0,6);
+      database.functions.replaceRandom('diamond','cobblestone',0,8);
+      database.functions.replaceRandom('cobblestone','dirt',0,20);
+      database.functions.replaceRandom('coal','cobblestone',5,15);
       database.functions.duplicateWorld();
       database.functions.listeners();
     },
@@ -162,12 +165,41 @@ const database = {
       }
     },
 
+    createButtons: () => {
+      const div = document.querySelector('.sidebar');
+      const resetButton = document.createElement('div');
+      resetButton.classList.add('game--btn');
+      resetButton.classList.add('resetWorld-btn');
+      resetButton.innerHTML = `<a>Reset World</a>`;
+      div.appendChild(resetButton);
+      const newWorldButton = document.createElement('div');
+      newWorldButton.classList.add('game--btn');
+      newWorldButton.classList.add('newWorld-btn');
+      newWorldButton.innerHTML = `<a>New World</a>`;
+      div.appendChild(newWorldButton);
+      const menuButton = document.createElement('div');
+      menuButton.classList.add('game--btn');
+      menuButton.classList.add('backToMenu-btn');
+      menuButton.innerHTML = `<a>Start Menu</a>`;
+      div.appendChild(menuButton);
+      const world = document.querySelector('.gamewindow');
+      world.appendChild(div);
+    },
+
     listeners: () => {
       const blocks = document.querySelectorAll('.block');
       blocks.forEach(e => e.addEventListener('mousedown', (e) =>  {
           database.functions.mineBlock(e);
           database.functions.placeable(e);
       }));
+      const menuButton = document.querySelector('.backToMenu-btn');
+      menuButton.addEventListener('click', database.functions.backToMenu);
+      const newWorldButton = document.querySelector('.newWorld-btn');
+      newWorldButton.addEventListener('click', database.functions.newWorld);
+      const resetButton = document.querySelector('.resetWorld-btn');
+      resetButton.addEventListener('click', database.functions.resetWorld);
+      const tools = document.querySelectorAll('.tool');
+      tools.forEach(tool => tool.addEventListener('click', database.functions.pickTool));
     },
 
     mineable: (e) => {
@@ -182,14 +214,17 @@ const database = {
     },
 
     mineBlock: (e) => {
-      if (database.functions.mineable(e) && Object.keys(database.inventory).length <= 6) {
+      if (database.functions.mineable(e) && Object.keys(database.inventory).length <= 8) {
         const current = e.target;
         e.target.classList.add('puff-out-center');
-        console.warn('Mined Block:',current.getAttribute('data-block-type'));
         const block = current.getAttribute('data-block-type');
-        setTimeout(() => current.setAttribute('data-block-type','sky'),300)
+        if (database.var.currentTool !== 'bucket') {
+          setTimeout(() => current.setAttribute('data-block-type','sky'),300)
+          database.functions.updateInventory(e,block,'mine');
+        } else {
+          setTimeout(() => current.setAttribute('data-block-type','blackstone'),300)
+        }
         setTimeout(() => e.target.classList.remove('puff-out-center'),2000)
-        database.functions.updateInventory(e,block,'mine');
       }
     },
 
@@ -205,15 +240,11 @@ const database = {
       database.var.currentBlock = '';
       const index = [...e.target.parentElement.children].indexOf(e.target);
       database.var.currentTool = database.tools[index];
-      console.warn('currentTool = ' + database.var.currentTool);
     },
 
     pickBlock: (e) => {
-      // remove Current Tool selected
       database.var.currentTool = '';
-      // add Current Block
       database.var.currentBlock = e.target.getAttribute('data-inventory');
-      console.warn('currentBlock = ' + database.var.currentBlock);
     },
 
     updateInventory: (e,block,type) => {
@@ -247,6 +278,7 @@ const database = {
         }
       }
     },
+
     duplicateWorld: () => {
       database.var.currentWorld = [];
       const blocks = document.querySelectorAll('.block');
@@ -256,42 +288,45 @@ const database = {
     resetWorld: () => {
       document.querySelectorAll('.block').forEach(e => e.remove());
       const world = document.querySelector('.world');
-      const length = database.var.currentWorld.length
-      for (let i = 0; i < length; i++) {world.appendChild(database.var.currentWorld[i])};
+      const length = database.var.currentWorld.length;
+      const oldWorld = [...database.var.currentWorld];
+      for (let i = 0; i < length; i++) {
+        const current = oldWorld[i].cloneNode(true);
+        world.appendChild(current);
+      };
       database.functions.listeners();
+      const inventory = document.querySelectorAll('.blockitem');
+      inventory.forEach(e => e.remove());
+      database.inventory = {};
+    },
+
+    backToMenu: () => {
+      const world = document.querySelector('.gamewindow');
+      world.style.display = 'none';
+      const landingPage = document.querySelector("#start-menu");
+      landingPage.style.display = 'block';
+      const newWorldButton = document.querySelector('.newWorld-btn');
+      newWorldButton.remove();
+      const resetButton = document.querySelector('.resetWorld-btn');
+      resetButton.remove();
+      const menuButton = document.querySelector('.backToMenu-btn');
+      menuButton.remove();
+    },
+
+    startGame: (e) => {
+      const landingPage = document.querySelector("#start-menu");
+      landingPage.style.display = 'none';
+      const world = document.querySelector('.gamewindow');
+      world.style.display = 'grid';
+      database.functions.createButtons();
+      database.functions.newWorld(e);
+      database.inventory = {};
     },
 
     randomNumber: (min,max) => parseInt(Math.random() * (max - min) + min),
-    randomFloatNumber: (min,max) => (Math.random() * (max - min) + min).toFixed(2),
   }
 };
 
-// Start Menu Gone
+// Start Menu
 const startButton = document.querySelector('.btn-1');
-startButton.addEventListener('click', e => {
-  const landingPage = document.querySelector("#start-menu");
-  landingPage.style.display = 'none';
-  const world = document.querySelector('.gamewindow');
-  world.style.display = 'grid';
-  database.functions.newWorld(e);
-  const div = document.querySelector('.sidebar');
-  const resetButton = document.createElement('div');
-  resetButton.classList.add('game--btn');
-  resetButton.innerHTML = `<a>Reset World</a>`;
-  div.appendChild(resetButton);
-  const newWorldButton = document.createElement('div');
-  newWorldButton.classList.add('game--btn');
-  newWorldButton.innerHTML = `<a>New World</a>`;
-  newWorldButton.addEventListener('click', database.functions.newWorld)
-  div.appendChild(newWorldButton);
-  const menuButton = document.createElement('div');
-  menuButton.classList.add('game--btn');
-  menuButton.innerHTML = `<a>Start Menu</a>`;
-  div.appendChild(menuButton);
-  
-  world.appendChild(div);
-});
-
-// Toolbar
-const tools = document.querySelectorAll('.tool');
-tools.forEach(tool => tool.addEventListener('click', database.functions.pickTool));
+startButton.addEventListener('click', database.functions.startGame);

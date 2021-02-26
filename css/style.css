@@ -88,9 +88,10 @@ img {
   /* bottom: 1px; */
   /* left: 50%; */
   /* transform: translate(-50%, 0); */
-  width: 387px;
-  height: 127px;
+  height: 387px;
+  width: 127px;
   background: url(../img/toolbarbig.png) no-repeat center center/cover;
+  margin: 0 auto;
 }
 
 .item {
@@ -107,7 +108,7 @@ img {
 
 .tool-1 {
   background: url(../img/pickaxe.png) no-repeat center center/cover;
-  left: 7px;
+  left: 9px;
 }
 .tool-1:hover {
   background: url(../img/pickaxe.png) no-repeat center center/cover, #ffffa07a;
@@ -121,34 +122,51 @@ img {
 }
 .tool-3 {
   background: url(../img/shovel.png) no-repeat center center/cover;
-  left: 137px;
+  top: 73px;
+  left: 9px;
 }
 .tool-3:hover {
   background: url(../img/shovel.png) no-repeat center center/cover, #ffffa07a;
 }
-.toolbar div:nth-child(4) {
-  top: 11px;
-  left: 205px;
+.tool-4 {
+  background: url(../img/bucket.png) no-repeat center center/cover;
+  top: 73px;
+  left: 72px;
+}
+.tool-4:hover {
+  background: url(../img/bucket.png) no-repeat center center/cover, #ffffa07a;
 }
 .toolbar div:nth-child(5) {
-  top: 11px;
-  left: 270px;
+  top: 140px;
+  left: 12px;
 }
 .toolbar div:nth-child(6) {
-  top: 11px;
-  left: 335px;
+  top: 140px;
+  left: 73px;
 }
 .toolbar div:nth-child(7) {
-  top: 73px;
-  left: 205px;
+  top: 206px;
+  left: 12px;
 }
 .toolbar div:nth-child(8) {
-  top: 73px;
-  left: 270px;
+  top: 206px;
+  left: 73px;
 }
 .toolbar div:nth-child(9) {
-  top: 73px;
-  left: 335px;
+  top: 270px;
+  left: 12px;
+}
+.toolbar div:nth-child(10) {
+  top: 270px;
+  left: 73px;
+}
+.toolbar div:nth-child(11) {
+  top: 334px;
+  left: 12px;
+}
+.toolbar div:nth-child(12) {
+  top: 334px;
+  left: 73px;
 }
 .inventoryCount {
   position: absolute;
@@ -158,9 +176,6 @@ img {
   text-shadow: 1px 0px 3px black;
   font-size: 14px;
 }
-/* .item[data-inventory="grass"] {
-  background-color: red;
-} */
 
 /* Game Window */
 .gamewindow {
@@ -170,6 +185,7 @@ img {
   text-align: center;
   display: none;
   grid-template-columns: 8fr 1fr;
+  padding: 2rem 3rem 0 3rem;
   /* flex-direction: column;
   justify-content: center;
   align-items: center; */
@@ -253,6 +269,10 @@ img {
 .block[data-block-type="blackstone"],
 .item[data-inventory="blackstone"] {
   background: url(../img/blocks/blackstone.png) no-repeat center/cover;
+}
+.block[data-block-type="coal"],
+.item[data-inventory="coal"] {
+  background: url(../img/blocks/coal.png) no-repeat center/cover;
 }
 .block[data-block-type="cloud"],
 .item[data-inventory="cloud"] {
