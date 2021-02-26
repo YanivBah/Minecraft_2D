@@ -115,6 +115,10 @@ const database = {
       const grassBlock = document.querySelectorAll('.block[data-block-type="grass"]');
       let randomize = database.functions.randomNumber(5,34);
       let col = parseInt(grassBlock[randomize].getAttribute('col'));
+      while (col < 5 || col > 36) {
+        randomize = database.functions.randomNumber(3,36);
+        col = parseInt(grassBlock[randomize].getAttribute('col'));
+      }
       let row = parseInt(grassBlock[randomize].getAttribute('row')) - 1;
       let current = document.querySelector(`.block[row="${row}"][col="${col}"]`);
       current.setAttribute('data-block-type', 'tree');
@@ -249,8 +253,10 @@ startButton.addEventListener('click', el => {
   database.functions.generateCloud();
   database.functions.generateGrass();
   database.functions.generateDirt();
-  database.functions.listeners();
   database.functions.generateUnderground();
+  database.functions.generateTree();
+  database.functions.generateTree();
+  database.functions.listeners();
 });
 
 // Toolbar
