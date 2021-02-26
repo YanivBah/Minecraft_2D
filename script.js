@@ -3,24 +3,18 @@ const database = {
   var: {
     currentTool: '',
     currentBlock: '',
-
+    currentWorld: [],
   },
 
   tools: ['pickaxe','axe','shovel'],
 
   blocks: {
-    pickaxe: ['cobblestone'],
+    pickaxe: ['cobblestone','diamond'],
     axe: ['tree', 'leaves'],
     shovel: ['dirt','grass'],
   },
   
-  inventory: {
-    // grass: 0,
-    // dirt: 0,
-    // cobblestone: 0,
-    // tree: 0,
-    // leaves: 0,
-  },
+  inventory: {},
 
   settings: {
     theme: '',
@@ -145,18 +139,17 @@ const database = {
       const current = document.querySelectorAll(`.block[data-block-type="${where}"]`);
       const randomize = database.functions.randomNumber(min,max);
       const count = max - min;
-      for (let i = 0; i <= randomize;i++) {
+      for (let i = 0; i < randomize;i++) {
         const randomize2 = database.functions.randomNumber(0,current.length);
         current[randomize2].setAttribute('data-block-type',what);
-        console.log(i);
       }
     },
 
     listeners: () => {
       const blocks = document.querySelectorAll('.block');
-      blocks.forEach(e => e.addEventListener('click', (e) =>  {
-        database.functions.mineBlock(e);
-        database.functions.placeable(e);
+      blocks.forEach(e => e.addEventListener('mousedown', (e) =>  {
+          database.functions.mineBlock(e);
+          database.functions.placeable(e);
       }));
     },
 
@@ -236,6 +229,21 @@ const database = {
         }
       }
     },
+    duplicateWorld: () => {
+      database.var.currentWorld = [];
+      const blocks = document.querySelectorAll('.block');
+      blocks.forEach(e => database.var.currentWorld.push(e.cloneNode(true)));
+    },
+
+    resetWorld: () => {
+      document.querySelectorAll('.block').forEach(e => e.remove());
+      const world = document.querySelector('.world');
+      const length = database.var.currentWorld.length
+      for (let i = 0; i < length; i++) {
+        world.appendChild(database.var.currentWorld[i]);
+      }
+      database.functions.listeners();
+    },
 
     randomNumber: (min,max) => parseInt(Math.random() * (max - min) + min),
     randomFloatNumber: (min,max) => (Math.random() * (max - min) + min).toFixed(2),
@@ -245,7 +253,6 @@ const database = {
 // Start Menu Gone
 const startButton = document.querySelector('.btn-1');
 startButton.addEventListener('click', el => {
-  // const landingPage = document.querySelector('.start-menu');
   const landingPage = document.querySelector("#start-menu");
   landingPage.style.display = 'none';
   const world = document.querySelector('.gamewindow');
@@ -259,7 +266,14 @@ startButton.addEventListener('click', el => {
   database.functions.generateUnderground();
   database.functions.generateTree();
   database.functions.generateTree();
+  database.functions.replaceRandom('diamond','cobblestone',0,6);
   database.functions.listeners();
+  database.functions.duplicateWorld();
+
+  const resetButton = document.createElement('div');
+  resetButton.classList.add('menu--btn');
+  resetButton.innerHTML = `<a>Reset World</a>`;
+  world.appendChild(resetButton);
 });
 
 // Toolbar

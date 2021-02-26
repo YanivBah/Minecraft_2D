@@ -67,10 +67,8 @@ img {
 }
 
 .toolbar {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 20px;
-  position: absolute;
+  display: block;
+  position: relative;
   bottom: 1px;
   left: 50%;
   transform: translate(-50%, 0);
@@ -157,8 +155,8 @@ img {
   display: none;
 }
 .world {
-  max-width: 100vh;
-  height: 87vh;
+  max-width: 75vh;
+  height: 75vh;
   margin: 0 auto;
   /* background: whitesmoke; */
   display: grid;
@@ -211,6 +209,14 @@ img {
 }
 .block[data-block-type="lava"] {
   background: url(../img/blocks/lava.jpg) no-repeat center/cover;
+}
+.block[data-block-type="diamond"],
+.item[data-inventory="diamond"] {
+  background: url(../img/blocks/diamond.png) no-repeat center/cover;
+}
+.block[data-block-type="blackstone"],
+.item[data-inventory="blackstone"] {
+  background: url(../img/blocks/blackstone.png) no-repeat center/cover;
 }
 .block[data-block-type="cloud"],
 .item[data-inventory="cloud"] {
