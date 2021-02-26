@@ -124,6 +124,18 @@ img {
   top: 11px;
   left: 335px;
 }
+.toolbar div:nth-child(7) {
+  top: 73px;
+  left: 205px;
+}
+.toolbar div:nth-child(8) {
+  top: 73px;
+  left: 270px;
+}
+.toolbar div:nth-child(9) {
+  top: 73px;
+  left: 335px;
+}
 .inventoryCount {
   position: absolute;
   bottom: 0;

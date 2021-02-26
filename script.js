@@ -15,11 +15,11 @@ const database = {
   },
   
   inventory: {
-    grass: 0,
-    dirt: 0,
-    cobblestone: 0,
-    tree: 0,
-    leaves: 0,
+    // grass: 0,
+    // dirt: 0,
+    // cobblestone: 0,
+    // tree: 0,
+    // leaves: 0,
   },
 
   settings: {
@@ -172,7 +172,7 @@ const database = {
     },
 
     mineBlock: (e) => {
-      if (database.functions.mineable(e)) {
+      if (database.functions.mineable(e) && Object.keys(database.inventory).length <= 6) {
         const current = e.target;
         console.warn('Mined Block:',current.getAttribute('data-block-type'));
         const block = current.getAttribute('data-block-type');
@@ -205,8 +205,9 @@ const database = {
     },
 
     updateInventory: (e,block,type) => {
-      if (type === 'mine' && database.inventory[block] === 0) {
-        database.inventory[block] += 1;
+      // if (type === 'mine' && database.inventory[block] === 0) {
+      if (type === 'mine' && !database.inventory[block]) {
+        database.inventory[block] = 1;
         const div = document.createElement('div');
         div.classList.add('item');
         div.classList.add('blockitem');
@@ -214,11 +215,13 @@ const database = {
         const span = document.createElement('span');
         span.classList.add('inventoryCount');
         span.textContent = database.inventory[block];
+        span.style.userSelect = 'none';
         div.appendChild(span);
         const toolbar = document.querySelector('.toolbar');
         toolbar.append(div);
         div.addEventListener('click',database.functions.pickBlock);
-      } else if (type === 'mine' && database.inventory[block] > 0 ) {
+        span.addEventListener('click', (e) => e.stopPropagation());
+      } else if (type === 'mine' && database.inventory[block] > 0) {
         database.inventory[block] += 1;
         const div = document.querySelector(`.blockitem[data-inventory="${block}"]`);
         div.querySelector('span').textContent = database.inventory[block];
