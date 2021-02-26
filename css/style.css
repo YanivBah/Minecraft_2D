@@ -82,6 +82,83 @@ img {
   box-shadow: inset -2px -4px #0004, inset 2px 2px #fff5;
 }
 
+.tutorial {
+  /* position: absolute; */
+  background: rgba(255, 255, 255, 1);
+  width: 900px;
+  /* top: 50%; */
+  /* left: 50%; */
+  /* transform: translate(-50%, -50%); */
+  display: grid;
+  grid-template-columns: 4fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 55px 20px 55px 20px 55px 20px 55px 20px 55px 20px;
+  padding: 2rem;
+  border-radius: 50px;
+  z-index: 99;
+}
+.box {
+  width: 45px;
+  height: 45px;
+  border-radius: 30%;
+  margin: 0 auto;
+}
+.box1 {
+  background: url(../img/pickaxe.png) no-repeat center center/cover;
+}
+.box2 {
+  background: url(../img/axe.png) no-repeat center center/cover;
+}
+.box3 {
+  background: url(../img/shovel.png) no-repeat center center/cover;
+}
+.box4 {
+  background: url(../img/bucket.png) no-repeat center center/cover;
+}
+.second {
+  grid-row: 3/5;
+}
+.tutorial-pickaxe1 {
+  background: url(../img/blocks/cobblestone.png) no-repeat center center/cover;
+  grid-row: 3/3;
+}
+.tutorial-axe1 {
+  background: url(../img/blocks/tree.jpg) no-repeat center center/cover;
+  grid-row: 3/3;
+}
+.tutorial-shovel1 {
+  background: url(../img/blocks/grass.png) no-repeat center center/cover;
+  grid-row: 3/3;
+}
+.tutorial-bucket1 {
+  background: url(../img/blocks/lava.jpg) no-repeat center center/cover;
+  grid-row: 3/3;
+}
+.tutorial-pickaxe2 {
+  background: url(../img/blocks/coal.png) no-repeat center center/cover;
+  grid-column: 2/2;
+  grid-row: 5/5;
+}
+.tutorial-axe2 {
+  background: url(../img/blocks/leaves.png) no-repeat center center/cover;
+  grid-row: 5/5;
+  grid-column: 3/3;
+}
+.tutorial-shovel2 {
+  background: url(../img/blocks/dirt.jpg) no-repeat center center/cover;
+  grid-row: 5/5;
+  grid-column: 4/4;
+}
+.tutorial-pickaxe3 {
+  background: url(../img/blocks/diamond.png) no-repeat center center/cover;
+  grid-row: 7/7;
+  grid-column: 2/2;
+}
+.tutorial-pickaxe4 {
+  background: url(../img/blocks/blackstone.png) no-repeat center center/cover;
+  grid-column: 2/2;
+  grid-row: 9/9;
+}
+
 .toolbar {
   /* display: block; */
   position: relative;

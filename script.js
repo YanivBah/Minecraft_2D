@@ -24,7 +24,7 @@ const database = {
   },
 
   functions: {
-    generateWorld: (e) => {
+    generateWorld: () => {
       if(document.querySelectorAll('.block')) {
         document.querySelectorAll('.block').forEach(e => e.remove());
       }
@@ -44,7 +44,7 @@ const database = {
       }
     },
 
-    generateSky: (e) => {
+    generateSky: () => {
       let number = database.functions.randomNumber(15,30);
       for (let row = 1;row <= number;row++) {
         const current = document.querySelectorAll(`.block[row="${row}"`);
@@ -134,9 +134,9 @@ const database = {
       }
     },
 
-    newWorld: (e) => {
-      database.functions.generateWorld(e);
-      database.functions.generateSky(e);
+    newWorld: () => {
+      database.functions.generateWorld();
+      database.functions.generateSky();
       database.functions.generateCloud();
       database.functions.generateCloud();
       database.functions.generateGrass();
