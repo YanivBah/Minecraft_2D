@@ -18,8 +18,7 @@ const database = {
 
   settings: {
     theme: '',
-    width: '',
-    height: '',
+    width: 40,
     world: '',
   },
 
@@ -28,8 +27,8 @@ const database = {
       if(document.querySelectorAll('.block')) {
         document.querySelectorAll('.block').forEach(e => e.remove());
       }
-      const height = database.settings.height || 40;
-      const width = database.settings.width || 40;
+      const height = 40;
+      const width = database.settings.width;
       const div = document.createElement('div');
       div.classList.add('block');
       const world = document.querySelector('.world');
@@ -45,7 +44,7 @@ const database = {
     },
 
     generateSky: (e) => {
-      let number = database.functions.randomNumber(20,30);
+      let number = database.functions.randomNumber(15,30);
       for (let row = 1;row <= number;row++) {
         const current = document.querySelectorAll(`.block[row="${row}"`);
         current.forEach(el => el.setAttribute('data-block-type', 'sky'));
@@ -55,7 +54,10 @@ const database = {
     generateCloud: () => {
       const skyBlocks = document.querySelectorAll('.block[data-block-type="sky"]');
       let number = skyBlocks[skyBlocks.length - 1].getAttribute('row');
-      const randomize = [database.functions.randomNumber(2,4),database.functions.randomNumber(2,26),database.functions.randomNumber(2,4)];
+      const randomize = [
+        database.functions.randomNumber(2,4),
+        database.functions.randomNumber(2,26),
+        database.functions.randomNumber(2,4)];
       let startRow = parseInt(number/randomize[0]);
       let number2 = 10;
       for (let row = startRow; row > startRow-randomize[2]; row--) {
@@ -101,7 +103,7 @@ const database = {
         const current = document.querySelectorAll(`.block[row="${row}"`);
         current.forEach(el => el.setAttribute('data-block-type', 'lava'));
       }
-      // Create cobblestones insead of null
+      // Create cobblestones instead of null
       database.functions.replaceAll('cobblestone','null');
     },
 
@@ -129,6 +131,21 @@ const database = {
           current.setAttribute('data-block-type', 'leaves');
         }
       }
+    },
+
+    newWorld: (e) => {
+      database.functions.generateWorld(e);
+      database.functions.generateSky(e);
+      database.functions.generateCloud();
+      database.functions.generateCloud();
+      database.functions.generateGrass();
+      database.functions.generateDirt();
+      database.functions.generateUnderground();
+      database.functions.generateTree();
+      database.functions.generateTree();
+      database.functions.replaceRandom('diamond','cobblestone',0,6);
+      database.functions.duplicateWorld();
+      database.functions.listeners();
     },
 
     replaceAll: (what, where) => {
@@ -167,9 +184,11 @@ const database = {
     mineBlock: (e) => {
       if (database.functions.mineable(e) && Object.keys(database.inventory).length <= 6) {
         const current = e.target;
+        e.target.classList.add('puff-out-center');
         console.warn('Mined Block:',current.getAttribute('data-block-type'));
         const block = current.getAttribute('data-block-type');
-        current.setAttribute('data-block-type','sky');
+        setTimeout(() => current.setAttribute('data-block-type','sky'),300)
+        setTimeout(() => e.target.classList.remove('puff-out-center'),2000)
         database.functions.updateInventory(e,block,'mine');
       }
     },
@@ -198,7 +217,6 @@ const database = {
     },
 
     updateInventory: (e,block,type) => {
-      // if (type === 'mine' && database.inventory[block] === 0) {
       if (type === 'mine' && !database.inventory[block]) {
         database.inventory[block] = 1;
         const div = document.createElement('div');
@@ -214,7 +232,7 @@ const database = {
         toolbar.append(div);
         div.addEventListener('click',database.functions.pickBlock);
         span.addEventListener('click', (e) => e.stopPropagation());
-      } else if (type === 'mine' && database.inventory[block] > 0) {
+      } else if (type === 'mine' && database.inventory[block] >= 1) {
         database.inventory[block] += 1;
         const div = document.querySelector(`.blockitem[data-inventory="${block}"]`);
         div.querySelector('span').textContent = database.inventory[block];
@@ -239,9 +257,7 @@ const database = {
       document.querySelectorAll('.block').forEach(e => e.remove());
       const world = document.querySelector('.world');
       const length = database.var.currentWorld.length
-      for (let i = 0; i < length; i++) {
-        world.appendChild(database.var.currentWorld[i]);
-      }
+      for (let i = 0; i < length; i++) {world.appendChild(database.var.currentWorld[i])};
       database.functions.listeners();
     },
 
@@ -252,35 +268,30 @@ const database = {
 
 // Start Menu Gone
 const startButton = document.querySelector('.btn-1');
-startButton.addEventListener('click', el => {
+startButton.addEventListener('click', e => {
   const landingPage = document.querySelector("#start-menu");
   landingPage.style.display = 'none';
   const world = document.querySelector('.gamewindow');
-  world.style.display = 'block';
-  database.functions.generateWorld(el);
-  database.functions.generateSky(el);
-  database.functions.generateCloud();
-  database.functions.generateCloud();
-  database.functions.generateGrass();
-  database.functions.generateDirt();
-  database.functions.generateUnderground();
-  database.functions.generateTree();
-  database.functions.generateTree();
-  database.functions.replaceRandom('diamond','cobblestone',0,6);
-  database.functions.listeners();
-  database.functions.duplicateWorld();
-
+  world.style.display = 'grid';
+  database.functions.newWorld(e);
+  const div = document.querySelector('.sidebar');
   const resetButton = document.createElement('div');
-  resetButton.classList.add('menu--btn');
+  resetButton.classList.add('game--btn');
   resetButton.innerHTML = `<a>Reset World</a>`;
-  world.appendChild(resetButton);
+  div.appendChild(resetButton);
+  const newWorldButton = document.createElement('div');
+  newWorldButton.classList.add('game--btn');
+  newWorldButton.innerHTML = `<a>New World</a>`;
+  newWorldButton.addEventListener('click', database.functions.newWorld)
+  div.appendChild(newWorldButton);
+  const menuButton = document.createElement('div');
+  menuButton.classList.add('game--btn');
+  menuButton.innerHTML = `<a>Start Menu</a>`;
+  div.appendChild(menuButton);
+  
+  world.appendChild(div);
 });
 
 // Toolbar
 const tools = document.querySelectorAll('.tool');
 tools.forEach(tool => tool.addEventListener('click', database.functions.pickTool));
-const listen = () => {
-  document.querySelectorAll('.block').forEach(e => {
-  e.addEventListener('click', database.functions.mineBlock);
-});
-}
