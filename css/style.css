@@ -33,6 +33,14 @@ img {
   height: 30vh;
   margin: 0 auto;
   padding-top: 0;
+  position: relative;
+}
+.start--logo::after {
+  content: "Made by Yaniv Bahalker";
+  color: white;
+  position: absolute;
+  bottom: 0;
+  left: 50px;
 }
 .start__buttons {
   position: absolute;

@@ -60,6 +60,11 @@
     width: 80vw;
     height: 80vw;
   }
+  .start--logo::after {
+    font-size: 11px;
+    bottom: 50px;
+    left: 15px;
+  }
 }
 @media only screen and (max-width: 500px) {
   .world {
