@@ -240,11 +240,21 @@ const database = {
       database.var.currentBlock = '';
       const index = [...e.target.parentElement.children].indexOf(e.target);
       database.var.currentTool = database.tools[index];
+      const check = document.querySelector('.current');
+      if (check) {
+        check.classList.remove('current');
+      }
+      e.target.classList.add('current');
     },
 
     pickBlock: (e) => {
       database.var.currentTool = '';
       database.var.currentBlock = e.target.getAttribute('data-inventory');
+      const check = document.querySelector('.current');
+      if (check) {
+        check.classList.remove('current');
+      }
+      e.target.classList.add('current');
     },
 
     updateInventory: (e,block,type) => {

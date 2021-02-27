@@ -184,34 +184,57 @@ img {
 }
 
 .tool-1 {
-  background: url(../img/pickaxe.png) no-repeat center center/cover;
+  /* background: url(../img/pickaxe.png) no-repeat center center/cover; */
   left: 9px;
 }
-.tool-1:hover {
-  background: url(../img/pickaxe.png) no-repeat center center/cover, #ffffa07a;
-}
 .tool-2 {
-  background: url(../img/axe.png) no-repeat center center/cover;
+  /* background: url(../img/axe.png) no-repeat center center/cover; */
   left: 72px;
 }
-.tool-2:hover {
-  background: url(../img/axe.png) no-repeat center center/cover, #ffffa07a;
-}
 .tool-3 {
-  background: url(../img/shovel.png) no-repeat center center/cover;
+  /* background: url(../img/shovel.png) no-repeat center center/cover; */
   top: 73px;
   left: 9px;
 }
-.tool-3:hover {
-  background: url(../img/shovel.png) no-repeat center center/cover, #ffffa07a;
-}
 .tool-4 {
-  background: url(../img/bucket.png) no-repeat center center/cover;
+  /* background: url(../img/bucket.png) no-repeat center center/cover; */
   top: 73px;
   left: 72px;
 }
 .tool-4:hover {
-  background: url(../img/bucket.png) no-repeat center center/cover, #ffffa07a;
+  background: #ffffa07a;
+}
+.tool-1:hover,
+.tool-2:hover,
+.tool-3:hover,
+.tool-4:hover {
+  background: #ffffa07a;
+}
+.tool-1::after,
+.tool-2::after,
+.tool-3::after,
+.tool-4::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 43px;
+  height: 43px;
+  /* background: url(../img/pickaxe.png) no-repeat center center/cover; */
+}
+.tool-1::after {
+  background: url(../img/pickaxe.png) no-repeat center center/cover;
+}
+.tool-2::after {
+  background: url(../img/axe.png) no-repeat center center/cover;
+}
+.tool-3::after {
+  background: url(../img/shovel.png) no-repeat center center/cover;
+}
+.tool-4::after {
+  background: url(../img/bucket.png) no-repeat center center/cover;
+}
+.current {
+  box-shadow: 0px 0px 8px 2px red;
 }
 .toolbar div:nth-child(5) {
   top: 140px;
