@@ -15,6 +15,9 @@ img {
   object-fit: contain;
   width: 100%;
 }
+.blur {
+  filter: blur(5px);
+}
 
 #start-menu {
   width: 100%;
@@ -78,23 +81,32 @@ img {
   color: #ffffa0;
 }
 
-.menu--btn:active {
+.menu--btn:active,
+.game--btn:active {
   box-shadow: inset -2px -4px #0004, inset 2px 2px #fff5;
+  transform: translateY(1px);
 }
 
 .tutorial {
-  /* position: absolute; */
-  background: rgba(255, 255, 255, 1);
-  width: 900px;
-  /* top: 50%; */
-  /* left: 50%; */
-  /* transform: translate(-50%, -50%); */
-  display: grid;
-  grid-template-columns: 4fr 1fr 1fr 1fr 1fr;
+  position: absolute;
+  max-width: 1000px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  gap: 5px;
+  background-image: linear-gradient(
+      rgba(255, 255, 255, 0.6),
+      rgba(255, 255, 255, 0.1)
+    ),
+    url("../img/tutorial.png");
+  filter: drop-shadow(0px 0px 200px black) blur(0px);
+  display: none;
+  grid-template-columns: 7fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 55px 20px 55px 20px 55px 20px 55px 20px 55px 20px;
-  padding: 2rem;
-  border-radius: 50px;
+  padding: 2rem 1rem 1rem 1rem;
+  border-radius: 10%;
   z-index: 99;
+  text-shadow: 1px 1px 1px white;
 }
 .box {
   width: 45px;
@@ -115,23 +127,27 @@ img {
   background: url(../img/bucket.png) no-repeat center center/cover;
 }
 .second {
-  grid-row: 3/5;
+  grid-row: 4/4;
 }
 .tutorial-pickaxe1 {
   background: url(../img/blocks/cobblestone.png) no-repeat center center/cover;
   grid-row: 3/3;
+  grid-column: 2/2;
 }
 .tutorial-axe1 {
   background: url(../img/blocks/tree.jpg) no-repeat center center/cover;
   grid-row: 3/3;
+  grid-column: 3/3;
 }
 .tutorial-shovel1 {
   background: url(../img/blocks/grass.png) no-repeat center center/cover;
   grid-row: 3/3;
+  grid-column: 4/4;
 }
 .tutorial-bucket1 {
   background: url(../img/blocks/lava.jpg) no-repeat center center/cover;
   grid-row: 3/3;
+  grid-column: 5/5;
 }
 .tutorial-pickaxe2 {
   background: url(../img/blocks/coal.png) no-repeat center center/cover;
@@ -157,6 +173,15 @@ img {
   background: url(../img/blocks/blackstone.png) no-repeat center center/cover;
   grid-column: 2/2;
   grid-row: 9/9;
+}
+.close-tutorial {
+  grid-column: 1/1;
+  grid-row: 9/9;
+  color: white;
+  text-shadow: none;
+}
+.close-tutorial.game--btn {
+  width: 98px;
 }
 
 .toolbar {
@@ -184,20 +209,16 @@ img {
 }
 
 .tool-1 {
-  /* background: url(../img/pickaxe.png) no-repeat center center/cover; */
   left: 9px;
 }
 .tool-2 {
-  /* background: url(../img/axe.png) no-repeat center center/cover; */
   left: 72px;
 }
 .tool-3 {
-  /* background: url(../img/shovel.png) no-repeat center center/cover; */
   top: 73px;
   left: 9px;
 }
 .tool-4 {
-  /* background: url(../img/bucket.png) no-repeat center center/cover; */
   top: 73px;
   left: 72px;
 }

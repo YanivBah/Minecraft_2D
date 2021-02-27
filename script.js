@@ -135,20 +135,25 @@ const database = {
     },
 
     newWorld: () => {
+      const randomize = [database.functions.randomNumber(1,3),database.functions.randomNumber(1,4)];
       database.functions.generateWorld();
       database.functions.generateSky();
-      database.functions.generateCloud();
-      database.functions.generateCloud();
+      database.functions.multiCalls(database.functions.generateCloud,randomize[0]);
       database.functions.generateGrass();
       database.functions.generateDirt();
       database.functions.generateUnderground();
-      database.functions.generateTree();
-      database.functions.generateTree();
+      database.functions.multiCalls(database.functions.generateTree,randomize[1]);
       database.functions.replaceRandom('diamond','cobblestone',0,8);
       database.functions.replaceRandom('cobblestone','dirt',0,20);
       database.functions.replaceRandom('coal','cobblestone',5,15);
       database.functions.duplicateWorld();
       database.functions.listeners();
+    },
+    
+    multiCalls: (func,count) => {
+      for (let i = 1; i <=count;i++) {
+        func();
+      }
     },
 
     replaceAll: (what, where) => {
@@ -321,16 +326,33 @@ const database = {
       resetButton.remove();
       const menuButton = document.querySelector('.backToMenu-btn');
       menuButton.remove();
+      const inventory = document.querySelectorAll('.blockitem');
+      inventory.forEach(e => e.remove());
+      database.inventory = {};
     },
 
     startGame: (e) => {
       const landingPage = document.querySelector("#start-menu");
       landingPage.style.display = 'none';
+      landingPage.classList.remove('blur');
+      const tutorial = document.querySelector('.tutorial');
+      tutorial.style.display = 'none';
       const world = document.querySelector('.gamewindow');
       world.style.display = 'grid';
       database.functions.createButtons();
       database.functions.newWorld(e);
       database.inventory = {};
+    },
+
+    showTutorial: (what) => {
+      const window = document.querySelector('.tutorial');
+      if (what === 'show') {
+        document.querySelector('#start-menu').classList.add('blur');
+        window.style.display = 'grid';
+      } else if (what === 'hide') {
+        document.querySelector('#start-menu').classList.remove('blur');
+        window.style.display = 'none';
+      }
     },
 
     randomNumber: (min,max) => parseInt(Math.random() * (max - min) + min),
@@ -340,3 +362,7 @@ const database = {
 // Start Menu
 const startButton = document.querySelector('.btn-1');
 startButton.addEventListener('click', database.functions.startGame);
+const tutorialBtn = document.querySelector('.btn-2');
+tutorialBtn.addEventListener('click', () => database.functions.showTutorial('show'));
+const closeTutorial = document.querySelector('.close-tutorial');
+closeTutorial.addEventListener('click',() => database.functions.showTutorial('hide'));
