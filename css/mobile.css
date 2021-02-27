@@ -1,0 +1,142 @@
+@media only screen and (max-width: 850px) {
+  .gamewindow {
+    grid-template-columns: 1fr;
+    grid-template-rows: 8fr 1fr;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+  }
+  .toolbar {
+    position: relative;
+    height: 127px;
+    width: 387px;
+    background: url(../img/toolbarbig-hr.png) no-repeat center center/cover;
+    margin: 0 auto;
+  }
+  .toolbar div:nth-child(5) {
+    top: 11px;
+    left: 140px;
+  }
+  .toolbar div:nth-child(6) {
+    top: 73px;
+    left: 140px;
+  }
+  .toolbar div:nth-child(7) {
+    top: 11px;
+    left: 205px;
+  }
+  .toolbar div:nth-child(8) {
+    top: 73px;
+    left: 205px;
+  }
+  .toolbar div:nth-child(9) {
+    top: 11px;
+    left: 270px;
+  }
+  .toolbar div:nth-child(10) {
+    top: 73px;
+    left: 270px;
+  }
+  .toolbar div:nth-child(11) {
+    top: 11px;
+    left: 335px;
+  }
+  .toolbar div:nth-child(12) {
+    top: 73px;
+    left: 335px;
+  }
+  .world {
+    width: 100%;
+    height: 80%;
+  }
+  .world-container {
+    margin: 0;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .world-container {
+    margin: 0 auto;
+  }
+  .world {
+    width: 80vw;
+    height: 80vw;
+  }
+}
+@media only screen and (max-width: 500px) {
+  .world {
+    grid-template-columns: repeat(40, 1fr);
+    grid-template-rows: repeat(40, 1fr);
+  }
+}
+@media only screen and (max-width: 405px) {
+  .menu--btn {
+    width: 70vw;
+  }
+  .toolbar {
+    height: 77px;
+    width: 234px;
+    background: url(../img/toolbarbig-hr.png) no-repeat center center/cover;
+  }
+  .tool-1::after,
+  .tool-2::after,
+  .tool-3::after,
+  .tool-4::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 23px;
+    height: 23px;
+  }
+  .item {
+    width: 23px;
+    height: 23px;
+  }
+  .tool-1 {
+    left: 7px;
+  }
+  .tool-2 {
+    left: 46px;
+  }
+  .tool-3 {
+    top: 47px;
+    left: 7px;
+  }
+  .tool-4 {
+    top: 47px;
+    left: 46px;
+  }
+  .toolbar div:nth-child(5) {
+    top: 7px;
+    left: 86px;
+  }
+  .toolbar div:nth-child(6) {
+    top: 47px;
+    left: 86px;
+  }
+  .toolbar div:nth-child(7) {
+    top: 7px;
+    left: 126px;
+  }
+  .toolbar div:nth-child(8) {
+    top: 47px;
+    left: 126px;
+  }
+  .toolbar div:nth-child(9) {
+    top: 7px;
+    left: 165px;
+  }
+  .toolbar div:nth-child(10) {
+    top: 47px;
+    left: 165px;
+  }
+  .toolbar div:nth-child(11) {
+    top: 7px;
+    left: 205px;
+  }
+  .toolbar div:nth-child(12) {
+    top: 47px;
+    left: 205px;
+  }
+  .inventoryCount {
+    font-size: 9px;
+  }
+}

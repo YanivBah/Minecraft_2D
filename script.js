@@ -141,8 +141,8 @@ const database = {
       database.functions.multiCalls(database.functions.generateCloud,randomize[0]);
       database.functions.generateGrass();
       database.functions.generateDirt();
-      database.functions.generateUnderground();
       database.functions.multiCalls(database.functions.generateTree,randomize[1]);
+      database.functions.generateUnderground();
       database.functions.replaceRandom('diamond','cobblestone',0,8);
       database.functions.replaceRandom('cobblestone','dirt',0,20);
       database.functions.replaceRandom('coal','cobblestone',5,15);

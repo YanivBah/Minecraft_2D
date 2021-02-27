@@ -8,7 +8,7 @@
 
 body {
   font-family: "Minecraftia", sans-serif;
-  /* overflow: hidden; */
+  overflow: hidden;
 }
 
 img {
@@ -33,6 +33,12 @@ img {
   height: 30vh;
   margin: 0 auto;
   padding-top: 0;
+}
+.start__buttons {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .menu--btn {
@@ -175,7 +181,7 @@ img {
   grid-row: 9/9;
 }
 .close-tutorial {
-  grid-column: 1/1;
+  grid-column: 5/5;
   grid-row: 9/9;
   color: white;
   text-shadow: none;
@@ -185,11 +191,7 @@ img {
 }
 
 .toolbar {
-  /* display: block; */
   position: relative;
-  /* bottom: 1px; */
-  /* left: 50%; */
-  /* transform: translate(-50%, 0); */
   height: 387px;
   width: 127px;
   background: url(../img/toolbarbig.png) no-repeat center center/cover;
@@ -240,7 +242,6 @@ img {
   left: 0;
   width: 43px;
   height: 43px;
-  /* background: url(../img/pickaxe.png) no-repeat center center/cover; */
 }
 .tool-1::after {
   background: url(../img/pickaxe.png) no-repeat center center/cover;
@@ -300,34 +301,23 @@ img {
 
 /* Game Window */
 .gamewindow {
-  width: 100%;
-  min-height: 100vh;
+  max-width: 100vw;
+  height: 100vh;
   background: #4c566a;
   text-align: center;
   display: none;
   grid-template-columns: 8fr 1fr;
-  padding: 2rem 3rem 0 3rem;
-  /* flex-direction: column;
-  justify-content: center;
-  align-items: center; */
+  padding: 2rem 3rem 2rem 3rem;
 }
 .world-container {
-  width: 90vh;
-  height: 90vh;
   margin: 0 auto;
   overflow-x: hidden;
   overflow-y: hidden;
 }
 .world {
-  /* height: 35vw; */
-  width: 90vh;
-  height: 90vh;
-  /* width: 90vh;
-  height: 90vh;
-  margin: 0 auto; */
-  /* background: whitesmoke; */
+  width: 50vw;
+  height: 50vw;
   display: grid;
-  /* grid-auto-flow: row; */
   grid-template-columns: repeat(40, minmax(10px, 1fr));
   grid-template-rows: repeat(40, minmax(10px, 1fr));
 }
@@ -351,7 +341,6 @@ img {
 .block {
   width: 100%;
   height: 100%;
-  /* border: 1px solid rgba(0, 0, 0, 0.123); */
 }
 .block:hover {
   border: 0.1px solid rgba(255, 255, 255, 0.5);
